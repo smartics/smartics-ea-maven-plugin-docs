@@ -49,6 +49,10 @@
           installation.
         </p>
         <p>
+          The images are found at <a href="xmi/images/">xmi/images</a> on this
+          site.
+        </p>
+        <p>
           Users of the plugin usually do not need to consult this site.
           Please visit the  <a href="${wiki-url}/display/EAMP/smartics+Enterprise+Architect+Maven+Plugin">project's homepage</a>
           for information on how to use this plugin.
