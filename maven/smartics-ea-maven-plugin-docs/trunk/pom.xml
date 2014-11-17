@@ -448,6 +448,7 @@
             <exclude>**/javadoc.xml</exclude>
             <exclude>**/header.txt</exclude>
             <exclude>**/*.eap</exclude>
+            <exclude>**/*.ldb</exclude>
             <exclude>**/*.dll</exclude>
           </excludes>
           <mapping>
