@@ -400,6 +400,7 @@
           <phase>pre-site</phase>
           <configuration>
             <eaProjectRepositoryFile>src/main/resources/model/model.eap</eaProjectRepositoryFile>
+            <generateHtmlSite>true</generateHtmlSite>
           </configuration>
         </execution>
       </executions>
