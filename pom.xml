@@ -10,7 +10,7 @@
   <artifactId>smartics-ea-maven-plugin-docs</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
-  <name>${project.artifactId}</name>
+  <name>smartics Enterprise Architect Maven Plugin Example</name>
   <description>
     A documentation site for the smartice Enterprise Architect Maven Plugin.
   </description>
