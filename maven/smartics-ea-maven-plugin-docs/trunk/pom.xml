@@ -12,7 +12,7 @@
 
   <name>smartics Enterprise Architect Maven Plugin Example</name>
   <description>
-    A documentation site for the smartice Enterprise Architect Maven Plugin.
+    A documentation site example for the smartics Enterprise Architect Maven Plugin.
   </description>
   <url>${weburl}</url>
   <inceptionYear>2014</inceptionYear>
