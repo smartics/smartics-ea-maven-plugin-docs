@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.smartics.maven.plugin</groupId>
@@ -23,7 +26,7 @@
       <name>The Apache Software License, Version 2.0</name>
       <url>http://www.apache.org/licenses/LICENSE-2.0</url>
       <distribution>repo</distribution>
-      <comments>Copyright 2014 Kronseder &amp; Reiner GmbH, smartics</comments>
+      <comments>Copyright 2014-2015 Kronseder &amp; Reiner GmbH, smartics</comments>
     </license>
   </licenses>
 
@@ -31,23 +34,15 @@
     <developer>
       <id>robert.reiner</id>
       <name>Robert Reiner</name>
-      <url>
-        http://www.smartics.de/about-us/robert-reiner
-      </url>
-      <organization>
-        Kronseder &amp; Reiner GmbH, smartics
-      </organization>
+      <url>https://www.smartics.de/go/robertreiner</url>
+      <organization>Kronseder &amp; Reiner GmbH, smartics</organization>
       <organizationUrl>http://www.smartics.de/</organizationUrl>
     </developer>
     <developer>
       <id>anton.kronseder</id>
       <name>Anton Kronseder</name>
-      <url>
-        http://www.smartics.de/about-us/anton-kronseder
-      </url>
-      <organization>
-        Kronseder &amp; Reiner GmbH, smartics
-      </organization>
+      <url>https://www.smartics.de/go/antonkronseder</url>
+      <organization>Kronseder &amp; Reiner GmbH, smartics</organization>
       <organizationUrl>http://www.smartics.de/</organizationUrl>
     </developer>
   </developers>
@@ -72,35 +67,64 @@
 
   <distributionManagement>
     <repository>
-      <id>${project-visibility}</id>
+      <id>${info.project.visibility}</id>
       <name>internal smartics release repository</name>
-      <url>${repo.server.upload}/${project-visibility}</url>
+      <url>${build.server.repo.upload}/${info.project.visibility}</url>
     </repository>
     <snapshotRepository>
       <uniqueVersion>false</uniqueVersion>
-      <id>${project-visibility}-snapshot</id>
+      <id>${info.project.visibility}-snapshot</id>
       <name>internal smartics snapshot repository</name>
-      <url>${repo.server.upload}/${project-visibility}-snapshot</url>
+      <url>${build.server.repo.upload}/${info.project.visibility}-snapshot</url>
     </snapshotRepository>
     <site>
-      <id>${project-visibility}-site</id>
+      <id>${info.project.visibility}-site</id>
       <name>documentation site</name>
-      <url>${site.root}/${project.groupId}/${project.artifactId}/${project.version}</url>
+      <url>${build.server.site.upload}/${project.groupId}/${project.artifactId}/${project.version}</url>
     </site>
   </distributionManagement>
 
+  <repositories>
+    <repository>
+      <id>smartics-${info.project.visibility}</id>
+      <url>${info.server.repo.group}</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>smartics-${info.project.visibility}-snapshot</id>
+      <url>${info.server.repo.group}</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <properties>
-    <project-visibility>public</project-visibility>
     <donationId>ZNFSBTAQJ49HA</donationId>
     <!-- <ohlohProjectId>710977</ohlohProjectId> -->
     <twitterId>smartics</twitterId>
     <!-- <sonarId>${project.groupId}:${project.artifactId}</sonarId> -->
 
-    <repo.server>http://www.smartics.eu/nexus</repo.server>
-    <repo.server.prefix>${repo.server}/content</repo.server.prefix>
-    <repo.server.upload>dav:${repo.server.prefix}/repositories</repo.server.upload>
+    <info.project.visibility>public</info.project.visibility>
 
-    <site.root>scp://www.smartics.eu/home/smartics/public_html/${project-visibility}</site.root>
+    <info.server.web>https://www.smartics.eu/confluence/display</info.server.web>
+    <info.server.issues>https://www.smartics.eu/jira/projects</info.server.issues>
+    <info.server.repo>https://www.smartics.eu/nexus</info.server.repo>
+    <info.server.scm>https://www.smartics.eu/svn/public</info.server.scm>
+
+    <info.server.repo.prefix>${info.server.repo}/content</info.server.repo.prefix>
+    <info.server.repo.group>${info.server.repo.prefix}/groups/public-group</info.server.repo.group>
+
+    <build.server.site.upload>scp://www.smartics.eu/home/smartics/public_html/${info.project.visibility}</build.server.site.upload>
+    <build.server.repo.upload>dav:${info.server.repo.prefix}/repositories</build.server.repo.upload>
 
     <!-- The following properties are accessible from site documentation and therefore contain no dots. -->
     <webroot>https://www.smartics.eu</webroot>
@@ -387,31 +411,31 @@
         </configuration>
       </plugin>
 
-    <plugin>
-      <groupId>de.smartics.maven.plugin</groupId>
-      <artifactId>smartics-ea-maven-plugin</artifactId>
-      <version>${smartics-ea-maven-plugin.version}</version>
-      <executions>
-        <execution>
-          <id>ea-export</id>
-          <goals>
-            <goal>export</goal>
-          </goals>
-          <phase>pre-site</phase>
-          <configuration>
-            <eaProjectRepositoryFile>src/main/resources/model/model.eap</eaProjectRepositoryFile>
-            <generateHtmlSite>true</generateHtmlSite>
-          </configuration>
-        </execution>
-      </executions>
-      <dependencies>
-        <dependency>
-          <groupId>de.smartics.sparxsystems</groupId>
-          <artifactId>eaapi</artifactId>
-          <version>11.1.1112</version>
-        </dependency>
-      </dependencies>
-    </plugin>
+      <plugin>
+        <groupId>de.smartics.maven.plugin</groupId>
+        <artifactId>smartics-ea-maven-plugin</artifactId>
+        <version>${smartics-ea-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>ea-export</id>
+            <goals>
+              <goal>export</goal>
+            </goals>
+            <phase>pre-site</phase>
+            <configuration>
+              <eaProjectRepositoryFile>src/main/resources/model/model.eap</eaProjectRepositoryFile>
+              <generateHtmlSite>true</generateHtmlSite>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>de.smartics.sparxsystems</groupId>
+            <artifactId>eaapi</artifactId>
+            <version>11.1.1112</version>
+          </dependency>
+        </dependencies>
+      </plugin>
 
       <plugin>
         <groupId>com.mycila.maven-license-plugin</groupId>
